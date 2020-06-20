@@ -1,0 +1,76 @@
+site_name: Svelte Recipes
+site_url:
+site_author: Svelte Society
+site_description: >-
+  MVP repo to just start collecting recipes for [Svelte Community](https://github.com/sveltejs/community).
+  The core inspiration is https://vuejs.org/v2/cookbook/. this package.json is just for maintenance work
+
+repo_name: svelte-society/recipes-mvp
+repo_url: https://github.com/svelte-society/recipes-mvp
+edit_uri: 'https://github.com/svelte-society/recipes-mvp/docs'
+
+copyright: Copyright &copy; 2020 Svelte Society
+
+theme:
+  name: material
+  palette:
+    primary: deep orange
+    accent: light blue
+  icon:
+    repo: fontawesome/brands/github-alt
+
+  logo: https://avatars2.githubusercontent.com/u/61731253?s=200&v=4
+  favicon: img/svelte_society.png
+
+nav:
+  - Home: 'index.md'
+  - Build Setup Recipes: "build-setup.md"
+  - Svelte Language Fundamentals: "language.md"
+  - Svelte Component Recipes: "components.md"
+  - Svelte Store Recipes: "stores.md"
+  - Svelte Action Recipes: "actions.md"
+  - Svelte Transition Recipes: "transitions.md"
+  - Svelte App-Level Design Patterns: "design-patterns.md"
+  - Svelte Performance Tips: "performance.md"
+  - Testing and Debugging Svelte: "testing.md"
+  - Publishing Svelte Components/Deploying Svelte Apps: "publishing.md"
+  - Special Usecase Walkthroughs: "walkthroughs.md"
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+  - git-revision-date-localized:
+      type: timeago
+
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      linenums: true
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:pymdownx.superfences.fence_div_format
+  - pymdownx.tabbed
+
+extra:
+  social:
+  - icon: fontawesome/brands/github-alt
+    link: https://github.com/svelte-society
+  - icon: fontawesome/brands/twitter
+    link: https://twitter.com/SvelteSociety
+  - icon: fontawesome/brands/youtube
+    link: https://www.youtube.com/channel/UCZSr5B0l07JXK2FIeWA0-jw
+
+extra_css:
+    - 'css/termynal.css'
+    - 'css/custom.css'
+
+extra_javascript:
+    - 'https://unpkg.com/mermaid@8.4.6/dist/mermaid.min.js'
+    - 'js/termynal.js'
+    - 'js/custom.js'

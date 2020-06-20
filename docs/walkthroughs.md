@@ -1,16 +1,4 @@
-’
-
 # Special Usecase Walkthroughs
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Editable SVG Icon Systems with Svelte and Heroicons](#editable-svg-icon-systems-with-svelte-and-heroicons)
-- [Practical use of Svelte slots with Google Maps](#practical-use-of-svelte-slots-with-google-maps)
-- [Create a CMS-Powered Blog with Svelte](#create-a-cms-powered-blog-with-svelte)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 Here we simply translate recipes from other framework recipe collections to Svelte, if they don't fit neatly anywhere. So you can compare and onboard easily.
 
@@ -34,7 +22,7 @@ For more a more detailed example of the entire setup, check out the example repo
 
 The next step is to create a base icon component (`Icon.svelte`). Start with the markup which will make use of a `slot`. This will allow the `svg` parent to accept children (which will be the paths of the icon).
 
-```svelte
+```html
 <svg
   xmlns="http://www.w3.org/2000/svg"
   width={width}
@@ -56,7 +44,7 @@ The `width`, `height`, and `color` props will have defaults so that the icon wil
 
 Our script will look like this:
 
-```svelte
+```html
 <script>
   export let width = 16
   export let height = 16
@@ -71,7 +59,7 @@ The default `color` prop is set to `currentColor` so the icon will inherit the c
 
 To use it, say we had a Svelte component called `PencilAlt.svelte` that contained only our icon svg paths like so:
 
-```svelte
+```html
 <path
   d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
 />
@@ -84,13 +72,13 @@ To use it, say we had a Svelte component called `PencilAlt.svelte` that containe
 
 We can use the `Icon` component as follows:
 
-```svelte
+```html
 <Icon name="pencil-alt"><PencilAlt /></Icon>
 ```
 
 Now, if we’d like to make many sizes for the icon, we can do so very easily:
 
-```svelte
+```html
 <p>
   <!-- you can pass in a smaller width and height -->
   <Icon

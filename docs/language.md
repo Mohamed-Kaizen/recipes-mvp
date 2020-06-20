@@ -1,15 +1,5 @@
 # Svelte Language Fundamentals
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Reactivity](#reactivity)
-- [Looping](#looping)
-- ["Scoped Global" CSS](#scoped-global-css)
-- [Passing Values from JS to CSS Variables](#passing-values-from-js-to-css-variables)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Reactivity
 
@@ -23,7 +13,7 @@ The simplest way to make your Svelte components reactive is by using an assignme
 
 The following works as expected and update the dom:
 
-```svelte
+```html
 <script>
   let num = 0;
 
@@ -32,7 +22,7 @@ The following works as expected and update the dom:
   }
 </script>
 
-<button on:click={updateNum}>Update</button>
+<button on:click="{updateNum}">Update</button>
 <p>{num}</p>
 ```
 
@@ -46,7 +36,7 @@ The only exception to the top-level variable rule is when you are inside an `eac
 
 The following example causes the array and, subsequently, the DOM to be updated:
 
-```svelte
+```html
 <script>
   let list = [{ n: 1 }, { n: 2 }, { n: 3 }];
 </script>
@@ -58,7 +48,7 @@ The following example causes the array and, subsequently, the DOM to be updated:
 
 This, however, will not:
 
-```svelte
+```html
 <script>
   let list = [1, 2, 3];
 </script>
@@ -70,7 +60,7 @@ This, however, will not:
 
 The easiest workaround is to just reference the array item by index from inside the each block:
 
-```svelte
+```html
 <script>
   let list = [1, 2, 3];
 </script>
@@ -86,10 +76,10 @@ Svelte only cares about which _variables_ are being reassigned, not the values t
 
 This is the sort of problem you may run into when dealing with objects. Since objects are passed by reference and not value, you can refer to the same value in many different variables. Let's look at an example:
 
-```svelte
+```html
 <script>
   let obj = {
-    num: 0
+    num: 0,
   };
 
   function updateNum() {
@@ -98,7 +88,7 @@ This is the sort of problem you may run into when dealing with objects. Since ob
   }
 </script>
 
-<button on:click={updateNum}>Update</button>
+<button on:click="{updateNum}">Update</button>
 <p>{obj.num}</p>
 ```
 
@@ -108,7 +98,7 @@ In this example, when we reassign `o.num` we are updating the value assigned to 
 
 Another situation that can sometimes cause unexpected results is when you reassign a function's parameter (as above), and that parameter has the same _name_ as a top-level variable.
 
-```svelte
+```html
 <script>
   let obj = {
     num: 0
@@ -131,7 +121,7 @@ Reassigning function parameters in this way is the same as reassigning a variabl
 
 In addition to the assignment-based reactivity system, Svelte also has special syntax to define code that should rerun when its dependencies change using labeled statements - `$:`.
 
-```svelte
+```html
 <script>
   let n = 0;
 
@@ -143,7 +133,7 @@ In addition to the assignment-based reactivity system, Svelte also has special s
 
 Whenever Svelte sees a reactive declaration, it makes sure to execute any reactive statements that depend on one another in the correct order and only when their direct dependencies have changed. A 'direct dependency' is a variable that is referenced inside the reactive declaration itself. References to variables inside functions that a reactive declaration _calls_ are not considered dependencies.
 
-```svelte
+```html
 <script>
   let n = 0;
 
@@ -256,35 +246,39 @@ Here are some examples if you want to loop through data structures besides array
 
 You can use spread operator `[...value]` for [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) to get an array of key value pairs.
 
-```svelte
+```html
 <script>
-  const map = new Map([['.svelte', 'Svelte'], ['.js', 'JavaScript']]);
+  const map = new Map([
+    [".svelte", "Svelte"],
+    [".js", "JavaScript"],
+  ]);
 </script>
 
 {#each [...map] as [key, value]}
-	<div>
-		{key}: {value}
-  </div>
+<div>
+  {key}: {value}
+</div>
 {/each}
 ```
 
 Both [`Map.keys()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/keys) and [`Map.values()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values) method return an iterable. To use `{#each}` with iterable, you can use spread operator `[...value]` on the iterable.
 
-```svelte
+```html
 <script>
-  const map = new Map([['.svelte', 'Svelte'], ['.js', 'JavaScript']]);
+  const map = new Map([
+    [".svelte", "Svelte"],
+    [".js", "JavaScript"],
+  ]);
 </script>
 
 {#each [...map.keys()] as key}
-	<div>
-		{key}
-  </div>
-{/each}
-
-{#each [...map.values()] as value}
-	<div>
-		{value}
-  </div>
+<div>
+  {key}
+</div>
+{/each} {#each [...map.values()] as value}
+<div>
+  {value}
+</div>
 {/each}
 ```
 
@@ -292,15 +286,15 @@ Both [`Map.keys()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 You can use spread operator `[...value]` for [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) to get an array of items.
 
-```svelte
+```html
 <script>
-  const set = new Set(['.svelte', '.js']);
+  const set = new Set([".svelte", ".js"]);
 </script>
 
 {#each [...set] as item}
-	<div>
-		{item}
-	</div>
+<div>
+  {item}
+</div>
 {/each}
 ```
 
@@ -308,15 +302,15 @@ You can use spread operator `[...value]` for [Set](https://developer.mozilla.org
 
 [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) is considered an **array-like object** as it has `.length` property.
 
-```svelte
+```html
 <script>
-  const string = 'Svelte';
+  const string = "Svelte";
 </script>
 
 {#each string as character}
-	<div>
-		{character}
-	</div>
+<div>
+  {character}
+</div>
 {/each}
 ```
 
@@ -326,18 +320,18 @@ You can use spread operator `[...value]` for [Set](https://developer.mozilla.org
 
 To use `{#each}` with generator function, you can use spread operator `[...value]` on the generator.
 
-```svelte
+```html
 <script>
-	function* generator() {
-		yield '.svelte';
-		yield '.js';
-	}
+  function* generator() {
+    yield ".svelte";
+    yield ".js";
+  }
 </script>
 
 {#each [...generator()] as item}
-	<div>
-		{item}
-	</div>
+<div>
+  {item}
+</div>
 {/each}
 ```
 
@@ -345,40 +339,39 @@ To use `{#each}` with generator function, you can use spread operator `[...value
 
 Once you spread a Map, Set, Generator, or any Iterable, you are creating a new array, and therefore binding (`bind:`) with the item may not work anymore.
 
-```svelte
+```html
 <script>
-  const map = new Map([['.svelte', 'Svelte'], ['.js', 'JavaScript']]);
+  const map = new Map([
+    [".svelte", "Svelte"],
+    [".js", "JavaScript"],
+  ]);
 </script>
 
 {#each [...map] as [key, value]}
-  <!-- You can't change the value of the input, nor the value in the map -->
-  <input bind:value={value} />
+<!-- You can't change the value of the input, nor the value in the map -->
+<input bind:value="{value}" />
 {/each}
 ```
 
 To workaround this, you can use `on:input` listener
 
-```svelte
+```html
 <script>
-  const map = new Map([['.svelte', 'Svelte'], ['.js', 'JavaScript']]);
+  const map = new Map([
+    [".svelte", "Svelte"],
+    [".js", "JavaScript"],
+  ]);
 </script>
 
-{#each [...map] as [key, value]}
-  <input
-    {value}
-    on:input={(event) => {
-      map.set(key, event.currentTarget.value);
-      map = map;
-    }}
-  />
-{/each}
+{#each [...map] as [key, value]} <input {value} on:input={(event) => {
+map.set(key, event.currentTarget.value); map = map; }} /> {/each}
 ```
 
 ## "Scoped Global" CSS
 
 Sometimes your template code doesn't match your CSS. If you generate html via `{@html}` or have some unstyled elements inside child components, you might want to style it, however Svelte won't let you write CSS that doesn't exist in the templates. You might feel forced to use `:global()` to make the CSS work, but that would leak it out to the rest of your app. So instead you could try this trick:
 
-```svelte
+```html
 <div>
   <Paragraph />
   <Paragraph />
@@ -401,23 +394,25 @@ You can easily read in CSS media query values into JS with [`window.matchMedia`]
 
 To set CSS Variables on an element, you can use the `style` attribute.
 
-```svelte
+```html
 <!-- App.svelte -->
 <script>
-  import Child from './Child.svelte';
-  let backgroundColor = 'blue';
+  import Child from "./Child.svelte";
+  let backgroundColor = "blue";
   export let width = 30;
   export let height = 30;
 </script>
-<label>Color <input type="color" bind:value={backgroundColor} /></label>
-<label>Width <input type="range" bind:value={width} /></label>
-<label>Height<input type="range" bind:value={height} /></label>
+<label>Color <input type="color" bind:value="{backgroundColor}" /></label>
+<label>Width <input type="range" bind:value="{width}" /></label>
+<label>Height<input type="range" bind:value="{height}" /></label>
 
-<div style="
+<div
+  style="
 	--backgroundColor: {backgroundColor};
 	--width: {width}px;
 	--height: {height}px;
-">
+"
+>
   <Child />
 </div>
 
@@ -425,8 +420,8 @@ To set CSS Variables on an element, you can use the `style` attribute.
 <style>
   div {
     background-color: var(--backgroundColor);
-		height: var(--height);
-		width: var(--width);
+    height: var(--height);
+    width: var(--width);
   }
 </style>
 <div />
@@ -434,31 +429,33 @@ To set CSS Variables on an element, you can use the `style` attribute.
 
 Alternatively, you can have a custom action to do this. This is already available with [svelte-css-vars](https://github.com/kaisermann/svelte-css-vars).
 
-```svelte
+```html
 <!-- App.svelte -->
 <script>
-  import Circle from './Circle.svelte';
+  import Circle from "./Circle.svelte";
 </script>
 
 <Circle size="80x80" bg="url(https://placekitten.com/80/80) center" />
 
 <Circle
-  size={120}
-  bg="radial-gradient(circle, #051937, #004d7a, #008793, #00bf72, #a8eb12) " />
+  size="{120}"
+  bg="radial-gradient(circle, #051937, #004d7a, #008793, #00bf72, #a8eb12) "
+/>
 
 <Circle
-  size={180}
+  size="{180}"
   bg="linear-gradient(45deg, #EE617D 25%, #3D6F8E 25%, #3D6F8E 50%, #EE617D 50%,
-  #EE617D 75%, #3D6F8E 75%, #3D6F8E 100%) center / 100% 20px" />
+  #EE617D 75%, #3D6F8E 75%, #3D6F8E 100%) center / 100% 20px"
+/>
 
 <Circle size="600x200" bg="url(https://placekitten.com/250/200) center" />
 
 <!-- Circle.svelte -->
 <script>
-  import cssVars from 'svelte-css-vars';
+  import cssVars from "svelte-css-vars";
 
-  export let bg = 'black';
-  export let size = '50x50';
+  export let bg = "black";
+  export let size = "50x50";
 
   $: [width, height = width] = size.toString().split(/[x|\/]/);
   $: styleVars = {
@@ -470,7 +467,7 @@ Alternatively, you can have a custom action to do this. This is already availabl
 
 <style>
   div {
-		display: inline-block;
+    display: inline-block;
     width: var(--width);
     height: var(--height);
     background: var(--bg);
@@ -478,7 +475,7 @@ Alternatively, you can have a custom action to do this. This is already availabl
   }
 </style>
 
-<div use:cssVars={styleVars} />
+<div use:cssVars="{styleVars}" />
 ```
 
 [Back to Table of Contents](https://github.com/svelte-society/recipes-mvp#table-of-contents)

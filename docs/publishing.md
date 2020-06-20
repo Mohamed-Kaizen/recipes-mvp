@@ -1,13 +1,5 @@
 # Publishing Svelte Components/Deploying Svelte Apps
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Packaging Svelte Components for npm](#packaging-svelte-components-for-npm)
-- [Dockerize a Svelte App](#dockerize-a-svelte-app)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Packaging Svelte Components for npm
 
@@ -17,14 +9,14 @@ _to be written_
 
 Let's pull down the [basic svelte template](https://github.com/sveltejs/template) using [degit](https://github.com/Rich-Harris/degit).
 
-```
+```bash
 npx degit sveltejs/template svelte-docker
 cd svelte-docker
 ```
 
 Next, we need to create a `Dockerfile` in the root of our project.
 
-```
+```dockerfile
 FROM node:12-alpine
 
 WORKDIR /app
@@ -41,7 +33,7 @@ CMD ["npm", "start"]
 
 You can now build and run your docker image.
 
-```
+```bash
 docker build . -t svelte-docker
 docker run -p 5000:5000 svelte-docker
 ```
@@ -52,7 +44,7 @@ Open up your browser at localhost:5000 and you should see your svelte app runnin
 
 On certain operating systems your docker containers IP may not be mapped to `localhost` on your host machine. This means your app won't be served at `localhost`. To see which IP your container is mapped to on your host machine, run your container then execute the following command:
 
-```
+```bash
 docker inspect <container-id>
 ```
 

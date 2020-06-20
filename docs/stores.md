@@ -1,12 +1,5 @@
 # Svelte Store Recipes
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Stores](#stores)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Stores
 
@@ -157,28 +150,31 @@ See it in action below. The following example uses the `synced` store to convert
 
 ```html
 <script>
-  import {synced} from './linkable'
+  import { synced } from "./linkable";
 
-  export let initialCelsius = null
-  export let initialFahrenheit = null
+  export let initialCelsius = null;
+  export let initialFahrenheit = null;
 
   const [C, F] = synced(
-    (C) => (C * 9/5) + 32,
-    (F) => (F - 32) * 5/9
+    (C) => (C * 9) / 5 + 32,
+    (F) => ((F - 32) * 5) / 9
   );
 
   if (initialCelsius && initialFahrenheit) {
-    console.error('You can only set one inital temperature. Please set initialCelsius or initialFahrenheit but not both.')
+    console.error(
+      "You can only set one inital temperature. Please set initialCelsius or initialFahrenheit but not both."
+    );
   } else if (initialCelsius) {
-    $C = initialCelsius
+    $C = initialCelsius;
   } else if (initialFahrenheit) {
-    $F = initialFahrenheit
+    $F = initialFahrenheit;
   } else {
-    $C = 0
+    $C = 0;
   }
 </script>
 
-<input bind:value={$C} type=number /> ºC = <input bind:value={$F} type=number /> ºF
+<input bind:value="{$C}" type="number" /> ºC =
+<input bind:value="{$F}" type="number" /> ºF
 ```
 
 Play around with it in the [REPL](https://svelte.dev/repl/abbc56bdbd6e45c8ad5cd6f75108c6d8?version=3).

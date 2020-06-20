@@ -1,14 +1,5 @@
 # Svelte App-Level Design Patterns
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Routing with Svelte](#routing-with-svelte)
-- [Authentication with Svelte](#authentication-with-svelte)
-- [Server Side Rendering](#server-side-rendering)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Routing with Svelte
 
@@ -22,8 +13,8 @@ _to be written_
 
 ### Further Links
 
-- https://routify.dev/ (with https://github.com/sveltech/routify-starter)
-- https://github.com/EmilTholin/svelte-routing
+- [Routify](https://routify.dev/) (with [Routify Starter](https://github.com/sveltech/routify-starter))
+- [svelte-routing](https://github.com/EmilTholin/svelte-routing)
 
 ## Authentication with Svelte
 
@@ -37,7 +28,7 @@ While Svelte may not necessary require an asynchronous authentication method, yo
 
 It is important to note that this example includes `preventDefault` to prevent the runtime from making an HTTP request at the instant when the form element gets created: `<form on:submit|preventDefault={submitHandler}>`.
 
-```svelte
+```html
 <script>
   import { session } from './session.js';
   /* session.js:

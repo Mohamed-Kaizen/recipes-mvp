@@ -1,16 +1,5 @@
 # Svelte Component Recipes
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Using Fetch to Consume APIs with Svelte](#using-fetch-to-consume-apis-with-svelte)
-- [Getting references to Components generated in an #each block](#getting-references-to-components-generated-in-an-each-block)
-- [Passing attributes to component DOM element](#passing-attributes-to-component-dom-element)
-- [Form Validation with Svelte](#form-validation-with-svelte)
-- [Client-Side Storage with Svelte](#client-side-storage-with-svelte)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Using Fetch to Consume APIs with Svelte
 
@@ -24,7 +13,7 @@ _Maintainers of this Recipe: [swyx](https://twitter.com/swyx)_
 
 We can declare a `data` variable and use the `onMount` lifecycle to fetch on mount and display data in our component:
 
-```svelte
+```html
 <!-- https://svelte.dev/repl/99c18a89f05d4682baa83cb673135f05?version=3.20.1 -->
 <script>
   import { onMount } from "svelte";
@@ -49,7 +38,7 @@ Since it is very common to update your app based on the status of your data fetc
 
 This example is exactly equal to Method 1 above:
 
-```svelte
+```html
 <!-- https://svelte.dev/repl/977486a651a34eb5bd9167f989ae3e71?version=3.20.1 -->
 <script>
   let promise = fetch(
@@ -74,10 +63,10 @@ Here you can see that it is very intuitive where to place your loading placehold
 
 Related Reading:
 
-- https://svelte.dev/docs#2_Assignments_are_reactive
-- https://svelte.dev/docs#onMount
-- https://svelte.dev/docs#Attributes_and_props
-- https://svelte.dev/docs#await
+- [Assignments Are Reactive](https://svelte.dev/docs#2_Assignments_are_reactive)
+- [onMount](https://svelte.dev/docs#onMount)
+- [Attributes And Props](https://svelte.dev/docs#Attributes_and_props)
+- [Await](https://svelte.dev/docs#await)
 
 ### Fetching on Button Click in Svelte
 
@@ -87,7 +76,7 @@ One flaw with the above approach is that it does not offer a way for the user to
 
 If we don't want to immediately load data on component mount, we can wait for user interaction instead:
 
-```svelte
+```html
 <!-- https://svelte.dev/repl/2a8db7627c4744008203ecf12806eb1f?version=3.20.1 -->
 <script>
   let data;
@@ -114,7 +103,7 @@ However, there are some problems with this approach. You may still need to decla
 
 It would be better to make all these commonplace UI idioms declarative. Await blocks to the rescue again:
 
-```svelte
+```html
 <!-- https://svelte.dev/repl/98ec1a9a45af4d75ac5bbcb1b5bcb160?version=3.20.1 -->
 <script>
   let promise;
@@ -148,7 +137,7 @@ The trick here is we can simply reassign the `promise` to trigger a refetch, whi
 
 Of course, it is up to you what UX you want - you may wish to keep displaying stale data and merely display a loading indicator instead while fetching the new data. Here's a possible solution using a second promise to execute the data fetching while the main promise stays onscreen:
 
-```svelte
+```html
 <!-- https://svelte.dev/repl/21e932515ab24a6fb7ab6d411cce2799?version=3.20.1 -->
 <script>
   let promise1, promise2;
@@ -208,7 +197,7 @@ export function getNewCount() {
 }
 ```
 
-```svelte
+```html
 <script>
   import { getNewCount, count, isFetching } from "./store";
 </script>
@@ -233,16 +222,16 @@ Svelte is purely a frontend framework, so it will be subject to the same CORS re
 
 You can solve both with a range of solutions from having a local API dev server or proxying requests through a serverless function or API gateway. None are responsibilities of Svelte but here are some helpful resources that may help:
 
-- https://alligator.io/nodejs/solve-cors-once-and-for-all-netlify-dev/
-- https://zeit.co/docs/v2/serverless-functions/introduction
-- https://docs.begin.com/en/http-functions/api-reference
-- https://aws.amazon.com/blogs/mobile/amplify-framework-local-mocking/
+- [solve cors once and for all netlify dev](https://alligator.io/nodejs/solve-cors-once-and-for-all-netlify-dev/)
+- [serverless functions introduction](https://zeit.co/docs/v2/serverless-functions/introduction)
+- [http functions api reference](https://docs.begin.com/en/http-functions/api-reference)
+- [amplify framework local mocking](https://aws.amazon.com/blogs/mobile/amplify-framework-local-mocking/)
 
-If you happen to be running [a Sapper app](https://sapper.svelte.dev/), then you may take advantage of preloading data server-side in Sapper: https://sapper.svelte.dev/docs#Preloading.
+If you happen to be running [a Sapper app](https://sapper.svelte.dev/), then you may take advantage of preloading data server-side in Sapper: [Preloading](https://sapper.svelte.dev/docs#Preloading).
 
 ### Further Links
 
-- Svelte Suspense discussion: https://github.com/sveltejs/svelte/issues/1736
+- Svelte Suspense discussion: [https://github.com/sveltejs/svelte/issues/1736](https://github.com/sveltejs/svelte/issues/1736)
 - Your link here?
 
 ## Getting references to Components generated in an #each block
@@ -253,7 +242,7 @@ Using `bind:this` allows a component to store a reference to it's children, this
 
 This method simply binds the generated component to an array element based on it's index within the loop.
 
-```svelte
+```html
 <script>
   import Child from "./Child.svelte";
   const array = [
@@ -272,7 +261,7 @@ This method simply binds the generated component to an array element based on it
 
 An alternative is to use an _unique_ key and bind the component to an object, effectively making a hashtable of components.
 
-```svelte
+```html
 <script>
   import Child from "./Child.svelte";
   const array = [
@@ -291,13 +280,14 @@ An alternative is to use an _unique_ key and bind the component to an object, ef
 
 When you want to "forward" any attributes like `class` or `style` to your component wrapper DOM element (instead of declaring variables), use `$$restProps`:
 
-```svelte
+```html
 <!-- Component.svelte -->
-<li {...$$restProps} ><slot></slot></li>
+<li {...$$restProps}><slot></slot></li>
 
 <!-- App.svelte -->
 <Component class="li-item-class">{name}</Component>
 ```
+
 [Svelte Playground here](https://svelte.dev/repl/24139d8599d348b9bcad5c0a1f471230?version=3.23.0). See [relevant part of docs](https://svelte.dev/docs#Attributes_and_props) for more.
 
 This is helpful where, for example, [using MDSveX](https://github.com/pngwn/MDsveX/), you want to create a bunch of Svelte wrappers to DOM elements like `H1`, `P`, and `A` instead of the normal `h1`, `p`, and `a`.

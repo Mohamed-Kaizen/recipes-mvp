@@ -1,13 +1,5 @@
 # Svelte Action Recipes
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Dynamic CSS in Svelte style tags](#dynamic-css-in-svelte-style-tags)
-- [Creating Custom Scroll Actions with Svelte](#creating-custom-scroll-actions-with-svelte)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Dynamic CSS in Svelte style tags
 
@@ -17,25 +9,25 @@ This is a very short and succint action that is just a couple of lines of code. 
 
 ```js
 export function styles(node, styles) {
-	setCustomProperties(node, styles)
-	
-	return {
-		update(styles) {
-			setCustomProperties(node, styles)
-		}
-	};
+  setCustomProperties(node, styles);
+
+  return {
+    update(styles) {
+      setCustomProperties(node, styles);
+    },
+  };
 }
 
 function setCustomProperties(node, styles) {
-	Object.entries(styles).forEach(([key, value]) => {
-		node.style.setProperty(`--${key}`, value)
-	})
+  Object.entries(styles).forEach(([key, value]) => {
+    node.style.setProperty(`--${key}`, value);
+  });
 }
 ```
 
 You pass in an object that contains your custom styles and it will create custom properties that are applied to the element in question. Here's how you would apply it to an element:
 
-```svelte
+```html
 <script>
 	import { styles } from './styles.js'
 	export let color = "pink";

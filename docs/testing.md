@@ -1,13 +1,5 @@
 # Testing and Debugging Svelte
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**
-
-- [Unit Testing Svelte Components](#unit-testing-svelte-components)
-- [Debugging Svelte Apps in VS Code](#debugging-svelte-apps-in-vs-code)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Unit Testing Svelte Components
 
@@ -79,7 +71,7 @@ test("events should work", () => {
 
 Slots are more difficult to test as there is no programmatic interface for working with them either inside or outside of a Svelte component. The simplest way is to create a test specific component that utilises a dynamic component to and passes in a default slot to that component which can be asserted against. In this example the component passed as a prop will be used as the containing or parent component of the slotted child content.
 
-```svelte
+```html
 <script>
   export let Component;
 </script>
@@ -110,7 +102,7 @@ test("it should render slotted content", () => {
 
 As with slots, there is no programmatic interface for the Context API (setContext, getContext). If you are testing a component, in isolation, that would normally have a parent setting a context to be read by a child, then the simplest solution is to use a test specific parent. This is similar to the approach we used when testing slots. A test component might look something like this.
 
-```svelte
+```html
 <script>
   import { setContext } from "svelte";
 
@@ -126,7 +118,7 @@ As with slots, there is no programmatic interface for the Context API (setContex
 
 The component we wish to test looks something like this:
 
-```svelte
+```html
 <script>
   import { KEY } from './Parent.svelte';
 
